@@ -40,7 +40,7 @@ class CloudzerNet(SimpleHoster):
         self.logDebug("Found wait", seconds)
         self.setWait(seconds + 1)
         self.wait()
-        response = self.load('http://cloudzer.net/io/ticket/slot/%s' % self.file_info['ID'], post=' ', cookies=True)
+        response = self.load('http://cloudzer.net/io/ticket/slot/%s' % self.fid, post=' ', cookies=True)
         self.logDebug("Download slot request response", response)
         response = json_loads(response)
         if response["succ"] is not True:
@@ -49,7 +49,7 @@ class CloudzerNet(SimpleHoster):
         recaptcha = ReCaptcha(self)
         challenge, response = recaptcha.challenge(self.CAPTCHA_KEY)
         post_data = {"recaptcha_challenge_field": challenge, "recaptcha_response_field": response}
-        response = json_loads(self.load('http://cloudzer.net/io/ticket/captcha/%s' % self.file_info['ID'],
+        response = json_loads(self.load('http://cloudzer.net/io/ticket/captcha/%s' % self.fid,
                                         post=post_data, cookies=True))
         self.logDebug("Captcha check response", response)
         self.logDebug("First check")
